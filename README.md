@@ -2,7 +2,7 @@
 
 ## Description
 
-Build and structure an back-end API for a social network using **Mongoose Object Data Modeling (ODM) for MongoDB** where users can share their thoughts, react to friends' thoughts, and create a friend list. MongoDB is used for large platforms becaue of its speed with large amounts of data and flexibility with unstructured data. Use Insomnia to check all API `GET`, `POST`, `PUT`, and `DELETE` routes.
+Build and structure an back-end API for a social network using **Mongoose Object Data Modeling (ODM) for MongoDB** where users can share their thoughts, react to friends' thoughts, and create a friend list. MongoDB is used for large platforms becaue of its speed with large amounts of data and flexibility with unstructured data. Use Insomnia to check all API `GET`, `POST`, `PUT`, and `DELETE` routes. [format timestamps](https://mongoosejs.com/docs/timestamps.html). [Validation](https://mongoosejs.com/docs/validation.html)
 
 ## Installation
 Be sure to have MongoDB installed on your machine. Follow the [MongoDB installation guide on The Full-Stack Blog](https://coding-boot-camp.github.io/full-stack/mongodb/how-to-install-mongodb) to install MongoDB locally.
@@ -15,12 +15,6 @@ npm install express
 Mongo Database [Mongoose](https://www.npmjs.com/package/mongoose)
 ```
 npm install mongoose
-```
-
-Javascript `Date` object to format timestamps.
-```
-const currentTime = new Date();
-console.log(currentTime);
 ```
 
 [To hide password using .env file](https://www.npmjs.com/package/dotenv)
