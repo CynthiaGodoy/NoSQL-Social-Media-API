@@ -1,5 +1,11 @@
 const { Thought, User } = require('../models');
 
+// Aggregate function to get the number of reactions overall
+const reactionCount = async () =>
+    Reaction.aggregate()
+        .count('reactionCount')
+        .then((numberOfReactions) => numberOfReactions);
+
 module.exports = {
     // GET all thoughts
     getThought(req, res) {
@@ -53,6 +59,22 @@ module.exports = {
             .catch((err) => res.status(500).json(err));
     },
 
+    // GET all reactions for count
+    getReaction(req, res) {
+        Thought.find()
+            .then(async (thought) => {
+            const thoughtObj = {
+                thought,
+                reactionCount: await reactionCount(),
+            };
+                return res.json(thoughtObj);
+            })
+            .catch((err) => {
+                console.log(err);
+                return res.status(500).json(err);
+            });
+        },
+
     // CREATE a reaction to a thought
     createReaction(req, res) {
         console.log('You are adding a reaction');
@@ -71,6 +93,13 @@ module.exports = {
     )
     .catch((err) => res.status(500).json(err));
     },
+
+
+
+
+
+
+
     // DELETE reaction to a thought
     deleteReaction(req, res) {
         Thought.findOneAndUpdate(

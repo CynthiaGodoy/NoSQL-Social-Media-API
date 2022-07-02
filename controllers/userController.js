@@ -1,6 +1,12 @@
 const { ObjectId } = require('mongoose').Types;
 const { User, Thought } = require('../models');
 
+// Aggregate function to get the number of friends overall
+const friendCount = async () =>
+    Friend.aggregate()
+        .count('friendCount')
+        .then((numberOfFriends) => numberOfFriends);
+
 module.exports = {
   // GET all user
     getUser(req, res) {
@@ -87,6 +93,23 @@ module.exports = {
     )
     .catch((err) => res.status(500).json(err));
     },
+
+    // GET all friends for count
+    getFriend(req, res) {
+        User.find()
+            .then(async (user) => {
+            const userObj = {
+                user,
+                friendCount: await friendCount(),
+            };
+                return res.json(userObj);
+            })
+            .catch((err) => {
+                console.log(err);
+                return res.status(500).json(err);
+            });
+        },
+
     // DELETE friend
     removeFriend(req, res) {
         User.findOneAndUpdate(
