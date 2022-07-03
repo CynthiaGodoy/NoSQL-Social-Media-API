@@ -17,11 +17,6 @@ Mongo Database [Mongoose](https://www.npmjs.com/package/mongoose)
 npm install mongoose
 ```
 
-[To hide password using .env file](https://www.npmjs.com/package/dotenv)
-```
-npm install dotenv --save
-```
-
 [To Install Insomnia](https://docs.insomnia.rest/insomnia/install) Insomnia is not installed as a CLI but it it a program used for opening API routes. 
 
 ## Usage
