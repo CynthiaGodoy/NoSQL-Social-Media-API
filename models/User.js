@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const userSchema = require('./User');
+// const userSchema = require('./User');
 
 // Schema to create USER model
 const userSchema = new Schema(
@@ -14,7 +14,6 @@ const userSchema = new Schema(
         type: String,
         required: true,
         unique: true,
-        validate: [validateEmail, "Please enter a valid email address"],
         match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/, "Please enter a valid email address",],
     },
     thought: [ 
@@ -32,8 +31,9 @@ const userSchema = new Schema(
     },
     {
     toJSON: {
-        getters: true,
+        virtuals: true,
     },
+    id: false,
     }
 );
 

@@ -15,7 +15,10 @@ router.route('/').get(getUser).post(createUser);
 // /api/user/:userId GET, PUT, DELETE
 router.route('/:userId').get(getSingleUser).put(updateUser).delete(deleteUser);
 
-// /api/students/:userId/friend/:friendId POST, DELETE
-router.route('/:userId/friend/:friendId').post(addFriend).delete(removeFriend);
+// /api/user/:userId/friend POST
+router.route('/:userId/friend').post(addFriend);
+
+// /api/user/:userId/friend/:friendId DELETE
+router.route('/:userId/friend/:friendId').delete(removeFriend);
 
 module.exports = router;

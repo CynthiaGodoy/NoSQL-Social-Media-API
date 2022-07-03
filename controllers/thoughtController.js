@@ -1,10 +1,10 @@
 const { Thought, User } = require('../models');
 
 // Aggregate function to get the number of reactions overall
-const reactionCount = async () =>
-    Reaction.aggregate()
-        .count('reactionCount')
-        .then((numberOfReactions) => numberOfReactions);
+// const reactionCount = async () =>
+    // Reaction.aggregate()
+        // .count('reactionCount')
+        // .then((numberOfReactions) => numberOfReactions);
 
 module.exports = {
     // GET all thoughts
@@ -27,22 +27,44 @@ module.exports = {
     // CREATE a thought
     createThought(req, res) {
         Thought.create(req.body)
-            .then((thought) => res.json(thought))
-            .catch((err) => {
-                console.log(err);
-                return res.status(500).json(err);
-        });
-    },
-    // DELETE a thought
+        .then(({ _id }) => {
+            return User.findOneAndUpdate(
+                { _id: req.body.userId },
+                { $push: { thought: _id } },
+                { new: true }
+            );
+            })
+            .then((thought) =>
+            !thought
+                ? res.status(404).json({ message: "No User with that ID" })
+                : res.json(thought)
+            )
+            .catch((err) => res.status(500).json(err));
+},
+    //         .then((thought) => res.json(thought))
+    //         .catch((err) => {
+    //             console.log(err);
+    //             return res.status(500).json(err);
+    //     });
+    // },
+    // DELETE a thought from a user
     deleteThought(req, res) {
         Thought.findOneAndDelete({ _id: req.params.thoughtId })
             .then((thought) =>
             !thought
                 ? res.status(404).json({ message: 'No thought with that ID' })
-                : User.deleteMany({ _id: { $in: thought.user } })
+                : User.findOneAndUpdate(
+                    { thought: req.params.thoughtId },
+                    { $pull: { thought: req.params.thoughtId } },
+                    { new: true }
+                )
             )
-                .then(() => res.json({ message: 'Thought and user deleted!' }))
-                .catch((err) => res.status(500).json(err));
+            .then((user) =>
+            !user
+                ? res.status(404).json({ message: 'No user with that ID'})
+                : res.json({ message: 'Thought successfully deleted' })
+            )
+            .catch((err) => res.status(500).json(err));
     },
     // UPDATE a thought
     updateThought(req, res) {
@@ -51,29 +73,29 @@ module.exports = {
             { $set: req.body },
             { runValidators: true, new: true }
         )
-            .then((thought) =>
-            !thought
-                ? res.status(404).json({ message: 'No thought with this id!' })
-                : res.json(thought)
+            .then((user) =>
+            !user
+                ? res.status(404).json({ message: 'No thought with that id' })
+                : res.json(user)
         )
             .catch((err) => res.status(500).json(err));
     },
 
     // GET all reactions for count
-    getReaction(req, res) {
-        Thought.find()
-            .then(async (thought) => {
-            const thoughtObj = {
-                thought,
-                reactionCount: await reactionCount(),
-            };
-                return res.json(thoughtObj);
-            })
-            .catch((err) => {
-                console.log(err);
-                return res.status(500).json(err);
-            });
-        },
+    // getReaction(req, res) {
+    //     Thought.find()
+    //         .then(async (thought) => {
+    //         const thoughtObj = {
+    //             thought,
+    //             reactionCount: await reactionCount(),
+    //         };
+    //             return res.json(thoughtObj);
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //             return res.status(500).json(err);
+    //         });
+    //     },
 
     // CREATE a reaction to a thought
     createReaction(req, res) {
@@ -89,30 +111,24 @@ module.exports = {
             ? res
                 .status(404)
                 .json({ message: 'No thought found with that ID :(' })
-            : res.json(thought)
+                : res.json(thought)
     )
     .catch((err) => res.status(500).json(err));
     },
-
-
-
-
-
-
 
     // DELETE reaction to a thought
     deleteReaction(req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
             { $pull: { reaction: { reactionId: req.params.reactionId } } },
-        { runValidators: true, new: true }
+            { runValidators: true, new: true }
     )
     .then((thought) =>
         !thought
             ? res
                 .status(404)
                 .json({ message: 'No reaction found with that ID :(' })
-            : res.json(thought)
+                : res.json(thought)
     )
     .catch((err) => res.status(500).json(err));
     },
