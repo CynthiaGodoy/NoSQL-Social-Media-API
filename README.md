@@ -60,7 +60,7 @@ npm install mongoose
 
 [Screencastify for Insomnia Demonstration](https://drive.google.com/file/d/10Lsk9vWGqvWa4DitwuNJvKZJ2qHZSJJS/view)
 
-https://drive.google.com/file/d/10Lsk9vWGqvWa4DitwuNJvKZJ2qHZSJJS/view
+[Untitled_ Jul 3, 2022 11_39 AM.webm](https://user-images.githubusercontent.com/99221047/197888342-254cf53f-98c7-407d-8e0b-176b057ecce1.webm)
 
 ## Screenshot
 ![](images/Screenshot.PNG)
