@@ -57,10 +57,7 @@ npm install mongoose
 ✅ Test API `POST` and `DELETE` routes Insomnia to show **Friends to a User's Friend List** can be successfully created and deleted.
 
 ## Walkthrough Videos: 
-
-[Screencastify for Insomnia Demonstration](https://drive.google.com/file/d/10Lsk9vWGqvWa4DitwuNJvKZJ2qHZSJJS/view)
-
-[Untitled_ Jul 3, 2022 11_39 AM.webm](https://user-images.githubusercontent.com/99221047/197888342-254cf53f-98c7-407d-8e0b-176b057ecce1.webm)
+[Insomnia Demo Social Media NoSQL.webm](https://user-images.githubusercontent.com/99221047/197889115-de6bfc30-026e-4780-94d8-699927acf040.webm)
 
 ## Screenshot
 ![](images/Screenshot.PNG)
